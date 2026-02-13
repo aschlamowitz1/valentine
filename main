@@ -260,9 +260,7 @@
       <h1>You Got It Right! 💝</h1>
       
       <div class="image-container">
-        <!-- REPLACE THIS COMMENT WITH YOUR SUCCESS IMAGE -->
-        <!-- Example: <img src="your-success-image.jpg" alt="Celebration"> -->
-        <div class="placeholder-text">Add your success image here!<br>Replace the comment in the code with:<br>&lt;img src="your-success-image.jpg" alt="Yay"&gt;</div>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVAMBC8xQ8iEoPnbfSfYWiFBUYgKgf8Sx1Dg&s.jpg" alt="Celebration"> 
       </div>
 
       <p class="success-message">I knew you'd say yes! ❤️</p>
