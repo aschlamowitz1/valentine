@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine? 💕</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      position: relative;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 25%, #ffd4e8 50%, #ffb8d9 100%);
+      z-index: -2;
+    }
+
+    .hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      opacity: 0;
+      animation: float 8s infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.6;
+      }
+      90% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+      position: relative;
+    }
+
+    .question-screen, .success-screen {
+      text-align: center;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .success-screen {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      color: #d81b60;
+      margin-bottom: 2rem;
+      text-shadow: 2px 2px 4px rgba(216, 27, 96, 0.2);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    .image-container {
+      width: 300px;
+      height: 300px;
+      margin: 2rem auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(216, 27, 96, 0.3);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .placeholder-text {
+      color: #d81b60;
+      font-size: 1rem;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .buttons-container {
+      display: flex;
+      gap: 2rem;
+      margin-top: 3rem;
+      position: relative;
+      min-height: 80px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 1.2rem 3rem;
+      font-size: 1.5rem;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #ff6b9d 0%, #d81b60 100%);
+      color: white;
+    }
+
+    .btn-yes:hover {
+      transform: scale(1.1);
+      box-shadow: 0 15px 40px rgba(216, 27, 96, 0.4);
+    }
+
+    .btn-yes:active {
+      transform: scale(1.05);
+    }
+
+    .btn-no {
+      background: linear-gradient(135deg, #9e9e9e 0%, #616161 100%);
+      color: white;
+      position: absolute;
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .btn-no:hover {
+      transform: scale(1.05);
+    }
+
+    .success-message {
+      font-size: 1.8rem;
+      color: #d81b60;
+      margin-top: 2rem;
+      font-weight: 600;
+      animation: bounce 1s ease-in-out;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      25% {
+        transform: translateY(-20px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      75% {
+        transform: translateY(-15px);
+      }
+    }
+
+    .confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #d81b60;
+      top: -10px;
+      opacity: 0;
+      animation: confettiFall 3s ease-out forwards;
+    }
+
+    @keyframes confettiFall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="hearts-container" id="hearts"></div>
+
+  <div class="container">
+    <div class="question-screen" id="questionScreen">
+      <h1>Will You Be My Valentine?</h1>
+      
+      <div class="image-container">
+        <!-- REPLACE THIS COMMENT WITH YOUR IMAGE -->
+        <!-- Example: <img src="your-image-url.jpg" alt="Cute photo"> -->
+        <div class="placeholder-text">Add your image here!<br>Replace the comment in the code with:<br>&lt;img src="your-image.jpg" alt="Valentine"&gt;</div>
+      </div>
+
+      <div class="buttons-container" id="buttonsContainer">
+        <button class="btn btn-yes" onclick="handleYes()">Yes! 💕</button>
+        <button class="btn btn-no" id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+      </div>
+    </div>
+
+    <div class="success-screen" id="successScreen">
+      <h1>You Got It Right! 💝</h1>
+      
+      <div class="image-container">
+        <!-- REPLACE THIS COMMENT WITH YOUR SUCCESS IMAGE -->
+        <!-- Example: <img src="your-success-image.jpg" alt="Celebration"> -->
+        <div class="placeholder-text">Add your success image here!<br>Replace the comment in the code with:<br>&lt;img src="your-success-image.jpg" alt="Yay"&gt;</div>
+      </div>
+
+      <p class="success-message">I knew you'd say yes! ❤️</p>
+    </div>
+  </div>
+
+  <script>
+    // Create floating hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerHTML = '💕';
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      heart.style.animationDelay = Math.random() * 5 + 's';
+      heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+      document.getElementById('hearts').appendChild(heart);
+    }
+
+    // Create multiple hearts
+    for (let i = 0; i < 20; i++) {
+      createHeart();
+    }
+
+    let noClickCount = 0;
+    const maxClicks = 5;
+
+    function moveButton() {
+      const btn = document.getElementById('noBtn');
+      const container = document.getElementById('buttonsContainer');
+      
+      noClickCount++;
+
+      if (noClickCount >= maxClicks) {
+        // Remove the No button after max attempts
+        btn.style.opacity = '0';
+        btn.style.transform = 'scale(0)';
+        setTimeout(() => {
+          btn.style.display = 'none';
+        }, 300);
+        return;
+      }
+
+      // Get container dimensions
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = btn.getBoundingClientRect();
+
+      // Calculate available space
+      const maxX = window.innerWidth - btnRect.width - 40;
+      const maxY = window.innerHeight - btnRect.height - 40;
+
+      // Generate random position
+      const randomX = Math.random() * maxX;
+      const randomY = Math.random() * maxY;
+
+      // Position the button absolutely
+      btn.style.position = 'fixed';
+      btn.style.left = randomX + 'px';
+      btn.style.top = randomY + 'px';
+      
+      // Add a little scale effect
+      btn.style.transform = 'scale(0.9)';
+      setTimeout(() => {
+        btn.style.transform = 'scale(1)';
+      }, 100);
+    }
+
+    function createConfetti() {
+      const colors = ['#ff6b9d', '#d81b60', '#ffd4e8', '#ff8fab', '#c2185b'];
+      const confettiContainer = document.createElement('div');
+      confettiContainer.className = 'confetti';
+      document.body.appendChild(confettiContainer);
+
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti-piece';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        confetti.style.opacity = '1';
+        confettiContainer.appendChild(confetti);
+      }
+
+      setTimeout(() => {
+        confettiContainer.remove();
+      }, 4000);
+    }
+
+    function handleYes() {
+      // Hide question screen
+      document.getElementById('questionScreen').style.display = 'none';
+      
+      // Show success screen
+      const successScreen = document.getElementById('successScreen');
+      successScreen.style.display = 'block';
+      
+      // Create confetti
+      createConfetti();
+      
+      // Add more hearts
+      for (let i = 0; i < 10; i++) {
+        setTimeout(createHeart, i * 100);
+      }
+    }
+  </script>
+</body>
+</html>
