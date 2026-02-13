@@ -247,9 +247,7 @@
       <h1>Will You Be My Valentine?</h1>
       
       <div class="image-container">
-        <!-- REPLACE THIS COMMENT WITH YOUR IMAGE -->
-        <!-- Example: <img src="your-image-url.jpg" alt="Cute photo"> -->
-        <div class="placeholder-text">Add your image here!<br>Replace the comment in the code with:<br>&lt;img src="your-image.jpg" alt="Valentine"&gt;</div>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNcuqkqIDLvnhhyTzFq_nihgWqVeWeEzSYlA&s.jpg" alt="Cute photo"> 
       </div>
 
       <div class="buttons-container" id="buttonsContainer">
